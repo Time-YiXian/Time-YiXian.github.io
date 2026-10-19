@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time-YiXian.github.io - Personal website</title>
+    <meta name="author" content="Time YiXian">
+    <meta name="description" content="YiXian's personal website - A junior developer passionate about technology and design, focusing on creating elegant digital experiences.">
+    <meta name="keywords" content="YiXian, developer, portfolio, web development, design">
+    <meta property="og:title" content="Time YiXian - Developer Portfolio">
+    <meta property="og:description" content="YiXian's personal website - A junior developer passionate about technology and design, focusing on creating elegant digital experiences.">
+    <meta property="og:image" content="assets/images/avatar.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://time-yixian.github.io/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Time YiXian - Developer Portfolio">
+    <meta name="twitter:description" content="YiXian's personal website - A junior developer passionate about technology and design, focusing on creating elegant digital experiences.">
+
+    <!-- favicon & Tailwind & FontAwesome -->
+    <link rel="icon" href="assets/images/favicon.ico">
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css">
+    <link rel="stylesheet" crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/misans@5.0.0/lib/Normal/MiSansVF.min.css" />
+    <!-- Tailwind css config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#007AFF',
+                        secondary: '#5856D6',
+                        accent: '#FE2C55',
+                        dark: '#0A0E27',
+                        'dark-light': '#1A1F3A',
+                    },
+                    fontFamily: {
+                        'modern': ['MiSans VF', 'sans-serif'],
+                    },
+                    animation: {
+                        'slide-up': 'slide-up 0.9s ease-out'
+                    },
+                    keyframes: {
+                        'slide-up': {
+                            '0%': { transform: 'translateY(50px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                    },
+                },
+            }
+        }
+    </script>
+
+    <!-- 自定义工具类样式 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            /* 玻璃拟态效果（边框与更强的高斯模糊） */
+            .glass-effect {
+                background: rgba(26, 31, 58, 0.22);
+                backdrop-filter: blur(18px);
+                -webkit-backdrop-filter: blur(18px);
+                border: 1px solid rgba(255,255,255,0.06);
+                box-shadow: 0 6px 30px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.02);
+            }
+            /* 渐变文字效果 */
+            .text-gradient {
+                background: linear-gradient(45deg, #007AFF, #5856D6, #FF2D55);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            /* 头像 */
+            .avatar {
+                border-radius: 1.5rem;
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+            .avatar:hover {
+                transform: scale(1.05);
+                box-shadow: 0 10px 30px rgba(0, 122, 255, 0.4);
+            }
+            /* 卡片 */
+            .card {
+                border-radius: 20px;
+                backdrop-filter: blur(20px);
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+    </style>
+
+    <!-- WebKit browsers滚动条样式 -->
+    <style>
+            :root{
+            --scroll-track: rgba(10,14,39,0.18);
+            --scroll-thumb-start: #007AFF;
+            --scroll-thumb-end: #5856D6;
+        }
+        ::-webkit-scrollbar { width: 12px; height: 12px; }
+        ::-webkit-scrollbar-track { background: var(--scroll-track); border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--scroll-thumb-start), var(--scroll-thumb-end));
+            border-radius: 9999px; border: 3px solid transparent; background-clip: padding-box;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+        }
+    </style>
+
+    <!-- Navbar transition and expanded state -->
+    <style>
+        #siteNavbar {
+            transition: top 0.5s cubic-bezier(0.4,0,0.2,1), left 0.5s cubic-bezier(0.4,0,0.2,1), width 0.5s cubic-bezier(0.4,0,0.2,1), border-radius 0.5s cubic-bezier(0.4,0,0.2,1), padding 0.5s cubic-bezier(0.4,0,0.2,1);
+            position: fixed;
+            top: 20px;
+            left: 25%;
+            width: 50%;
+            background: rgba(26,31,58,0.22);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.38);
+            z-index: 50;
+            border-radius: 12px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        /* Expanded state on scroll */
+        #siteNavbar.site-navbar-expanded {
+            top: 0;
+            left: 0;
+            width: 100%;
+            max-width: none;
+            border-radius: 0;
+            padding-left: 40px;
+            padding-right: 40px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.45);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            #siteNavbar { left: 15%; width: 70%; padding-left: 24px; padding-right: 24px; }
+            #siteNavbar.site-navbar-expanded { padding-left: 32px; padding-right: 32px; }
+        }
+
+        @media (max-width: 992px) {
+            #siteNavbar { left: 10%; width: 80%; }
+        }
+
+        @media (max-width: 768px) {
+            #siteNavbar { left: 5%; width: 90%; }
+            #siteNavbar.site-navbar-expanded { height: auto; padding-left: 24px; padding-right: 24px; }
+        }
+
+        /* Language hover/expand styles */
+        .lang-wrapper { display: inline-block; position: relative; }
+        .lang-toggle { width: 56px; transition: width 250ms cubic-bezier(0.2,0,0,1), background-color 200ms; overflow: hidden; white-space: nowrap; }
+        #langDropdown {
+            visibility: hidden; opacity: 0; pointer-events: none; transform: translateY(-6px) scale(0.98); z-index: 60;
+            transition: opacity 180ms cubic-bezier(0.2,0,0,1), transform 180ms cubic-bezier(0.2,0,0,1), visibility 0s linear 180ms;
+        }
+        .lang-wrapper.open #langDropdown, .lang-wrapper.open-persistent #langDropdown {
+            visibility: visible; opacity: 1; pointer-events: auto; transform: translateY(0) scale(1);
+            transition: opacity 180ms cubic-bezier(0.2,0,0,1), transform 180ms cubic-bezier(0.2,0,0,1), visibility 0s linear 0s;
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .lang-wrapper:hover .lang-toggle { width: 100px; background-color: rgba(255,255,255,0.14); }
+            .lang-wrapper:hover #langDropdown {
+                visibility: visible; opacity: 1; pointer-events: auto; transform: translateY(0) scale(1);
+                transition: opacity 180ms cubic-bezier(0.2,0,0,1), transform 180ms cubic-bezier(0.2,0,0,1), visibility 0s linear 0s;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-white font-modern overflow-x-hidden">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:outline-none">
+        Skip to main content
+    </a>
+    <!-- 背景 -->
+    <div class="fixed inset-0 z-0" style="background: linear-gradient(114514deg, rgba(10,14,39,0.85), rgba(26,31,58,0.55) 50%, rgba(10,14,39,0.85)),url('assets/images/15.png') center/cover no-repeat;"></div>
+
+    <!-- 导航栏 -->
+    <nav id="siteNavbar" class="fixed z-50 bg-black/50 backdrop-blur-md rounded-2xl px-4 py-2">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo区域 -->
+                <a href="#home" class="flex items-center space-x-3">
+                    <div class="w-11 h-11 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center">
+                        <i class="fas fa-code text-lg"></i>
+                    </div>
+                    <span class="text-2xl font-modern font-bold text-gradient">Hello！YiXian</span>
+                </a>
+
+                <!-- 桌面端导航栏菜单 - 大屏显示 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" data-i18n="nav.home" class="nav-link font-semibold text-lg md:text-xl hover:text-primary transition-colors duration-300">Home</a>
+                    <a href="#about" data-i18n="nav.about" class="nav-link font-semibold text-lg md:text-xl hover:text-primary transition-colors duration-300">About</a>
+                    <a href="#contact" data-i18n="nav.contact" class="nav-link font-semibold text-lg md:text-xl hover:text-primary transition-colors duration-300">Contact</a>
+                </div>
+
+                <!-- 右侧：语言切换 + 移动菜单按钮 -->
+                <div class="flex items-center space-x-3">
+                    <div class="relative lang-wrapper">
+                        <button id="langBtn" class="px-3 py-1 bg-white/10 text-white rounded-md text-sm lang-toggle" aria-expanded="false">EN</button>
+                        <div id="langDropdown" class="absolute right-0 mt-0 bg-black/40 rounded-md shadow-lg py-1">
+                            <button data-lang="en" class="w-full text-center px-3 py-2 text-white hover:bg-white/10">EN</button>
+                            <button data-lang="cn" class="w-full text-center px-3 py-2 text-white hover:bg-white/10">中文</button>
+                        </div>
+                    </div>
+
+                    <button id="menuBtn" class="md:hidden text-2xl text-white" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 移动端导航菜单-->
+        <div id="mobileMenu" class="md:hidden hidden mt-4 bg-black/30 rounded-xl">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-3">
+                <a href="#home" data-i18n="nav.home" class="nav-link font-semibold text-lg hover:text-primary transition-colors duration-300 py-2">Home</a>
+                <a href="#about" data-i18n="nav.about" class="nav-link font-semibold text-lg hover:text-primary transition-colors duration-300 py-2">About</a>
+                <a href="#contact" data-i18n="nav.contact" class="nav-link font-semibold text-lg hover:text-primary transition-colors duration-300 py-2">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main" tabindex="-1">
+
+    <!-- 首页区域 - 全屏显示，底部布局 -->
+    <section id="home" class="min-h-screen flex items-end justify-center relative z-10 pt-20 pb-16">
+        <div class="container mx-auto px-6 text-center">
+            <!-- 个人介绍文本 -->
+            <div class="animate-slide-up">
+                <h1 class="text-4xl md:text-6xl font-modern font-bold mb-6">
+                    <span class="text-gradient">YiXian</span> <span>·</span> <span class="text-primary">Developer</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    A junior developer who loves technology and design<br>Focusing on creating elegant digital experiences
+                </p>
+                <!-- 行动按钮组 -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#about" class="px-8 py-4 bg-gradient-to-r from-primary to-secondary rounded-full text-white font-semibold hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        <span data-i18n="cta.learn">Learn More</span>
+                    </a>
+                    <a href="#contact" class="px-8 py-4 glass-effect rounded-full text-white font-semibold hover:bg-primary/20 transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-envelope mr-2"></i>
+                        <span data-i18n="cta.contact">Contact Me</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About区域 -->
+    <section id="about" class="py-20 relative z-10">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <!-- 区域标题 -->
+            <div class="text-center mb-20">
+                <h2 data-i18n="about.title" class="text-4xl md:text-6xl font-modern font-bold text-gradient mb-4">About Me</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="md:col-span-1">
+                    <div class="card p-6 text-center flex flex-col items-center justify-center">
+                        <div class="w-32 h-32 avatar mb-6 shadow-xl">
+                            <img src="assets/images/avatar.jpg" alt="Personal avatar" class="w-full h-full object-cover" loading="lazy">
+                        </div>
+                        <h3 class="text-2xl font-bold">Time YiXian</h3>
+                        <p class="text-primary font-medium text-sm mt-1">Junior Developer | 玩机爱好者 | 学生 | 技术爱好者</p>
+                    </div>
+
+                    <!-- 快速信息网格 -->
+                    <!-- 基本信息卡片 -->
+                    <div class="card p-6 mt-4">
+                        <h4 data-i18n="basic.title" class="text-lg font-modern font-bold text-secondary mb-4">Basic Information</h4>
+                        <div class="space-y-3 text-sm text-gray-300">
+                            <div class="flex justify-between"><span class="text-gray-300">Name:</span><span>YiXian</span></div>
+                            <div class="flex justify-between"><span class="text-gray-300">Location:</span><span>China</span></div>
+                            <div class="flex justify-between"><span class="text-gray-300">Education:</span><span>Vocational School</span></div>
+                            <div class="flex justify-between"><span class="text-gray-300">Experience:</span><span>5 Years+</span></div>
+                        </div>
+                    </div>
+
+                    <!-- 个人兴趣卡片 -->
+                    <div class="card p-6 mt-4">
+                        <h4 data-i18n="interests.title" class="text-lg font-modern font-bold text-accent mb-4">Personal Interests</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-xs">Programming</span>
+                            <span class="px-3 py-1 bg-secondary/20 text-secondary rounded-full text-xs">Design</span>
+                            <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-xs">Reading</span>
+                            <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-xs">Music</span>
+                            <span class="px-3 py-1 bg-secondary/20 text-secondary rounded-full text-xs">Travel</span>
+                            <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-xs">Photography</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 个人简介卡片 -->
+                <div class="md:col-span-2 mx-auto">
+                    <div class="card p-8 mb-8">
+                        <h4 data-i18n="profile.title" class="text-xl font-modern font-bold text-primary mb-4">Profile</h4>
+                        <div class="text-gray-300 leading-relaxed space-y-4">
+                            <p>I am a passionate junior developer who loves technology and design, and I am gradually learning various popular programming frameworks and development tools in my spare time. I excel at creating elegant, efficient, and user-friendly digital products, and I am proficient in everything from interface design to functional implementation.</p>
+                            <p>I always maintain curiosity about new technologies, constantly learning and exploring the latest development frameworks and design trends.My goal is to create beautiful user experiences through technology, making complex functions simple and easy to use.</p>
+                            <p>In my spare time, I enjoy reading books, listening to music, and exploring new design concepts.I believe in the power of technology to change the world, and I am working hard towards this goal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Me页 -->
+    <section id="contact" class="py-20 relative z-10">
+        <div class="container mx-auto px-6">
+            <!-- 区域标题 -->
+            <div class="text-center mb-16">
+                <h2 data-i18n="contact.title" class="text-4xl md:text-6xl font-modern font-bold text-gradient mb-4">Contact Me</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+                <p class="text-gray-300 mt-4 max-w-2xl mx-auto">Feel free to contact me for any cooperation opportunities or technical exchanges</p>
+            </div>
+            <!-- 联系信息卡片 - 双列网格布局 -->
+            <div class="card p-8 max-w-4xl mx-auto">
+                <h3 data-i18n="contact.info" class="text-2xl font-bold text-primary mb-6">Contact Information</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <a href="mailto:timeyixian@gmail.com" class="flex items-center space-x-4 p-4 bg-dark/50 rounded-lg hover:bg-[#FF6A00]/10 transition-colors cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-[#FF6A00]/20 flex items-center justify-center"><i class="fas fa-envelope text-[#FF6A00] text-xl"></i></div>
+                        <div class="min-w-0"><p data-i18n="label.email" class="text-gray-300 text-sm">Email</p><p class="font-semibold truncate">timeyixian@gmail.com</p></div>
+                    </a>
+
+                    <a href="https://github.com/Time-YiXian" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 bg-dark/50 rounded-lg hover:bg-[#6e40c9]/10 transition-colors cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-[#6e40c9]/20 flex items-center justify-center"><i class="fab fa-github text-[#6e40c9] text-xl"></i></div>
+                        <div class="min-w-0"><p class="text-gray-300 text-sm">GitHub</p><p class="font-semibold truncate">Time-YiXian</p></div>
+                    </a>
+
+                    <a href="https://uri.amap.com/marker?position=117.0,36.6&name=China" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 bg-dark/50 rounded-lg hover:bg-primary/10 transition-colors cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center"><i class="fas fa-map-marker-alt text-primary text-xl"></i></div>
+                        <div class="min-w-0"><p data-i18n="label.location" class="text-gray-300 text-sm">Location</p><p class="font-semibold truncate">China</p></div>
+                    </a>
+
+                    <a href="https://www.douyin.com/user/MS4wLjABAAAAWtHShdkDUr1WlgcpqEX4i69qVAABPB0Klpzdah8SbChgjSgxhmc5oHdPtum_WH9a" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 bg-dark/50 rounded-lg hover:bg-accent/10 transition-colors cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center"><i class="fab fa-tiktok text-accent text-xl"></i></div>
+                        <div class="min-w-0"><p data-i18n="label.Douyin" class="text-gray-300 text-sm">Douyin</p><p class="font-semibold truncate">timeyixian</p></div>
+                    </a>
+
+                    <a href="https://steamcommunity.com/profiles/76561199558770165" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 bg-dark/50 rounded-lg hover:bg-[#1B2838]/30 transition-colors cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-[#1B2838]/40 flex items-center justify-center"><i class="fab fa-steam text-[#66C0F4] text-xl"></i></div>
+                        <div class="min-w-0"><p data-i18n="label.Steam" class="text-gray-300 text-sm">Steam ID</p><p class="font-semibold truncate">1598504437</p></div>
+                    </a>
+
+                    <a href="https://t.me/time_yixian" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-4 p-4 bg-dark/50 rounded-lg hover:bg-[#0088cc]/10 transition-colors cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-[#0088cc]/20 flex items-center justify-center"><i class="fab fa-telegram-plane text-[#0088cc] text-xl"></i></div>
+                        <div class="min-w-0"><p data-i18n="label.Telegram" class="text-gray-300 text-sm">TG Channel</p><p class="font-semibold truncate">time_yixian</p></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="py-12 bg-dark-light/80 relative z-10 border-t border-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-6">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center"><i class="fas fa-code"></i></div>
+                <span class="text-xl font-modern font-bold text-gradient">YiXian</span>
+            </div>
+            <p class="text-gray-300 mb-6 max-w-2xl mx-auto">A junior developer who loves technology and design, focusing on creating elegant digital experiences. Thank you for visiting.</p>
+            <div class="border-t border-gray-800 pt-6">
+                <p class="text-gray-400 text-sm">© 2026 YiXian.github.io All rights reserved. | <span class="text-primary">Designed with ❤️ by Time YiXian</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/site.js"></script>
+
+</body>
+</html>
